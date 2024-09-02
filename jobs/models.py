@@ -13,11 +13,11 @@ class Job(models.Model):
         return self.title
 
 
-class Applicant(models.Model):
+class Application(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='applicants')
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
     skill_description = models.TextField(max_length=500)
-    create_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('job', 'applicant')
