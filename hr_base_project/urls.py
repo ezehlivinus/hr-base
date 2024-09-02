@@ -14,12 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 # from django.contrib import admin
 from django.urls import path, include
+from drf_yasg import openapi
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="HR Base API",
+        default_version='v1',
+        description="API for HR Base project",
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny]
+)
 
 urlpatterns = [
-    #    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('api/account/', include('accounts.urls')),
     path('api/org/', include('organizations.urls')),
-    path('api/jobs/', include('jobs.urls'))
+    path('api/jobs/', include('jobs.urls')),
+    path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
