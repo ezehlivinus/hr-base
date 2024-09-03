@@ -16,12 +16,6 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractUser, PermissionsMixin):
@@ -39,6 +33,8 @@ class User(AbstractUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     # is_staff = models.BooleanField(default=False)
 
+    username = None
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -47,3 +43,18 @@ class User(AbstractUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+# from django.contrib.auth.models import AbstractUser
+# from django.db import models
+#
+#
+# class User(AbstractUser):
+#     ROLES = (
+#         ('USER', 'User'),
+#         ('ORG_ADMIN', 'Organization Admin'),
+#         ('ORG_STAFF', 'Organization Staff'),
+#         ('ORG_HR', 'Organization HR'),
+#     )
+#     role = models.CharField(max_length=20, choices=ROLES, default='USER')
+#
+#     def __str__(self):
+#         return self.username
