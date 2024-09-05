@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 from .models import User
 from .serializers import UserSerializer, LoginSerializer
@@ -30,12 +30,13 @@ class LoginView(generics.GenericAPIView):
         user = User.objects.filter(email=email).first()
         if user and user.check_password(password):
             refresh = RefreshToken.for_user(user)
+            access = AccessToken.for_user(user)
             return Response({
                 'status': True,
                 'data': {
                     'auth_credentials': {
                         'refresh': str(refresh),
-                        'access': str(refresh.token)
+                        'access': str(access)
                     }
                 }
             })

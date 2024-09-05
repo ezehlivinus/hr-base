@@ -157,6 +157,16 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API for HR Base project',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SCHEMA_PATH_PREFIX': '/api/'
-    # OTHER SETTINGS
+    'SCHEMA_PATH_PREFIX': '/api/',
+    # Other settings you might want to add:#
+    # Other settings you might want to add:
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SORT_OPERATIONS': False,
 }
+
+

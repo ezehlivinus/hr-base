@@ -14,7 +14,7 @@ class CreateJobView(generics.CreateAPIView):
     def perform_create(self, serializer):
         if self.request.user.role != 'ORG_HR':
             raise PermissionDenied('Only HRs can create job postings.')
-        serializer.save(created_by=self.request.user)
+        return serializer.save()
 
 class UpdateJobView(generics.UpdateAPIView):
     queryset = Job.objects.all()
